@@ -54,7 +54,7 @@ public:
 
         size--;
 
-       if ((capacity - size) > 10) {
+       if ((capacity - size) > capacity + capacity/2) {
            decreaseStorageSpace();
        }
     };
