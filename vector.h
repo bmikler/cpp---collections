@@ -11,15 +11,17 @@ public:
         data = new T[capacity];
 
     };
-    ~Vector(){};
+    ~Vector(){
+        delete[] data;
+    };
 
-    void add(T element) {
+    void add(const T &element) {
 
         add(element, size);
 
     };
 
-    void add(T element, int index) {
+    void add(const T &element, int index) {
 
         if (index > size) {
             index = size;
@@ -39,7 +41,7 @@ public:
     }
 
     T get(int index){
-        return data[index];
+        return *(data + index);
     };
 
     void remove(int index){
@@ -54,7 +56,7 @@ public:
 
         size--;
 
-       if ((capacity - size) > capacity + capacity/2) {
+       if ((capacity - size) > capacity/2) {
            decreaseStorageSpace();
        }
     };
@@ -92,7 +94,7 @@ private:
         data = newArr;
 
     };
-    void copy(T source[], T target[]) {
+    void copy(T *source, T *target) {
         for (int i = 0; i < size; i++) {
             target[i] = source[i];
         }
