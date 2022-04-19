@@ -2,16 +2,17 @@
 
 using namespace std;
 
+template<typename T>
 struct Node{
-    Node(int data) {
+    Node(T data) {
         this->data = data;
         next = nullptr;
     }
-    int data;
+    T data;
     Node *next;
 };
 
-
+template<typename T>
 class List{
 public:
     List(){
@@ -20,10 +21,10 @@ public:
     };
     ~List() {};
 
-    int get(int index){
+    T get(int index){
         int counter  = 0;
 
-        Node *pointer = head;
+        Node<T> *pointer = head;
 
         while(counter != index) {
             pointer = pointer->next;
@@ -33,12 +34,12 @@ public:
         return pointer->data;
 
     }
-    void add(int element){
+    void add(const T &element){
 
         if (head == nullptr) {
             head = new Node(element);
         } else {
-            Node *pointer = head;
+            Node<T> *pointer = head;
 
             while(pointer->next != nullptr) {
                 pointer = pointer->next;
@@ -62,8 +63,9 @@ public:
 
         else {
 
-            Node* previousNode = setPointerToPreviosuNode(index);
-            Node* nodeToRemove = previousNode->next;
+            Node<T> *previousNode = setPointerToPreviosuNode(index);
+            Node<T> *nodeToRemove = previousNode->next;
+
 
             if (index == size) {
                 previousNode->next = nullptr;
@@ -89,17 +91,17 @@ public:
 
 private:
     int size;
-    Node *head;
+    Node<T> *head;
 
     void removeFirstNode() {
-        Node * nodeToRemove = head;
+        Node<T> *nodeToRemove = head;
         head = head->next;
 
         delete nodeToRemove;
     }
-    Node* setPointerToPreviosuNode(int index) {
+    Node<T> *setPointerToPreviosuNode(int index) {
         int counter = 0;
-        Node *pointer = head;
+        Node<T> *pointer = head;
 
         while(counter != (index - 1)) {
             pointer = pointer->next;
