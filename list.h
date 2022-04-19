@@ -51,6 +51,10 @@ public:
 
     };
 
+    void add(const T &element, int index) {
+
+    }
+
     void remove(int index) {
 
         if(index < 0 || index > size){
@@ -103,7 +107,7 @@ private:
         int counter = 0;
         Node<T> *pointer = head;
 
-        while(counter != (index - 1)) {
+        while(counter < (index - 1)) {
             pointer = pointer->next;
             counter++;
         }
