@@ -31,15 +31,8 @@ public:
     };
 
     T get(int index){
-        int counter  = 0;
 
-        Node<T> *pointer = head;
-
-        while(counter != index) {
-            pointer = pointer->next;
-            counter++;
-        }
-
+        Node<T> *pointer = setPointerToNode(index);
         return pointer->data;
 
     }
@@ -93,10 +86,7 @@ public:
             Node<T> *previousNode = setPointerToNode(index - 1);
             Node<T> *nodeToRemove = previousNode->next;
 
-
-
             previousNode->next = nodeToRemove->next;
-
 
             delete nodeToRemove;
         }
@@ -110,14 +100,13 @@ public:
     }
 
     bool isEmpty() {
-        return head = nullptr;
+        return head == nullptr;
     }
 
 
 private:
     int size;
     Node<T> *head;
-
 
     Node<T> *setPointerToNode(int index) {
         int counter = 0;
@@ -129,6 +118,5 @@ private:
         }
         return pointer;
     }
-
 
 };

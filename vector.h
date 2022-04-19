@@ -66,7 +66,7 @@ public:
         return size;
     };
     bool isEmpty() {
-        return size = 0;
+        return size == 0;
     };
 
 
