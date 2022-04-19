@@ -1,33 +1,28 @@
 #include <iostream>
-#include "vector.h"
+#include "list.h"
 
 using namespace std;
 
 int main()
 {
-    Vector<string> v;
+    List<int> list;
 
-    v.add("aaaa");
-    v.add("hello", 1);
+    list.add(1);
+    list.add(2);
+    list.add(3);
+    list.add(4);
 
-    cout << "first:" << endl;
-    for (int i = 0; i < v.getSize(); i++) {
-        cout << v.get(i) << endl;
+    for (int i = 0; i < list.getSize(); i++) {
+        cout << list.get(i) << endl;
     }
 
-    cout << v.getSize() << endl;
+    cout << endl;
+    list.remove(3);
 
-    v.add("koniec", 50);
 
-    cout << "second:" << endl;
-    for (int i = 0; i < v.getSize(); i++) {
-        cout << v.get(i) << endl;
+    for (int i = 0; i < list.getSize(); i++) {
+        cout << list.get(i) << endl;
     }
 
-    v.remove(10);
-    cout << "remove:" << endl;
-    for (int i = 0; i < v.getSize(); i++) {
-        cout << v.get(i) << endl;
-    }
 
 }

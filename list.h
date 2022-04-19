@@ -19,7 +19,16 @@ public:
         head = nullptr;
         size = 0;
     };
-    ~List() {};
+    ~List() {
+        Node<T> *deletePointer = head;
+
+        while(head->next != nullptr) {
+            head = head->next;
+            delete deletePointer;
+            deletePointer = head;
+        }
+
+    };
 
     T get(int index){
         int counter  = 0;
@@ -36,46 +45,58 @@ public:
     }
     void add(const T &element){
 
-        if (head == nullptr) {
-            head = new Node(element);
-        } else {
-            Node<T> *pointer = head;
-
-            while(pointer->next != nullptr) {
-                pointer = pointer->next;
-            }
-            pointer->next = new Node(element);
-        }
-
-        size++;
+        add(element, size);
 
     };
 
     void add(const T &element, int index) {
 
+        if (index < 0 || index > size) {
+            throw runtime_error("Wrong index");
+        }
+
+        Node<T> *newNode = new Node(element);
+
+        if (index == 0) {
+
+            newNode->next = head;
+            head = newNode;
+
+        } else {
+
+            Node<T> *previousNode = setPointerToNode(index - 1);
+
+            newNode->next = previousNode->next;
+            previousNode->next = newNode;
+
+        }
+
+        size++;
+
     }
 
     void remove(int index) {
 
-        if(index < 0 || index > size){
+        if(index < 0 || index > size - 1){
             throw runtime_error("Wrong index");
         }
 
         if (index == 0) {
-            removeFirstNode();
+            Node<T> *nodeToRemove = head;
+            head = head->next;
+
+            delete nodeToRemove;
         }
 
         else {
 
-            Node<T> *previousNode = setPointerToPreviosuNode(index);
+            Node<T> *previousNode = setPointerToNode(index - 1);
             Node<T> *nodeToRemove = previousNode->next;
 
 
-            if (index == size) {
-                previousNode->next = nullptr;
-            } else {
-                previousNode->next = nodeToRemove->next;
-            }
+
+            previousNode->next = nodeToRemove->next;
+
 
             delete nodeToRemove;
         }
@@ -97,17 +118,12 @@ private:
     int size;
     Node<T> *head;
 
-    void removeFirstNode() {
-        Node<T> *nodeToRemove = head;
-        head = head->next;
 
-        delete nodeToRemove;
-    }
-    Node<T> *setPointerToPreviosuNode(int index) {
+    Node<T> *setPointerToNode(int index) {
         int counter = 0;
         Node<T> *pointer = head;
 
-        while(counter < (index - 1)) {
+        while(counter < (index)) {
             pointer = pointer->next;
             counter++;
         }
