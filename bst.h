@@ -1,5 +1,7 @@
 #include<iostream>
 
+using namespace std;
+
 template<typename T>
 struct Node{
     Node(const T &data){
@@ -31,7 +33,27 @@ public:
 
     };
     void remove(const T &element);
-    T search(const T &element);
+
+    bool search(const T &element) {
+        search(element, root);
+    }
+
+    bool search(const T &element, Node<T> *parent){
+
+        if(parent == nullptr) {
+            return false;
+        }
+        if (element > parent->data){
+            return search(element, parent->right);
+        }
+
+        if (element < parent->data){
+            return search(element, parent->left);
+        }
+
+        return true;
+
+    };
     void print(){
 
 
