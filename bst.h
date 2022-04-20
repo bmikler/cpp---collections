@@ -20,7 +20,9 @@ public:
     BST() {
         this->root = nullptr;
     }
-    ~BST(){};
+    ~BST(){
+
+    };
     void add(const T &element){
 
         Node<T> *newNode = new Node(element);
@@ -36,10 +38,17 @@ public:
 
     bool search(const T &element) {
         search(element, root);
-    }
+    };
+
+
+    void print(){
+        printChildren(root, "");
+
+    };
+private:
+    Node<T> *root;
 
     bool search(const T &element, Node<T> *parent){
-
         if(parent == nullptr) {
             return false;
         }
@@ -52,35 +61,56 @@ public:
         }
 
         return true;
-
     };
-    void print(){
 
-
-    };
-//private:
-    Node<T> *root;
     void appendChild(Node<T> *parent, Node<T> *newNode){
         if (newNode->data > parent->data) {
-
             if (parent->right == nullptr){
                 parent->right = newNode;
             } else {
                 appendChild(parent->right, newNode);
             }
-
         }
 
         if (newNode->data < parent-> data){
-
             if(parent->left == nullptr) {
                 parent->left = newNode;
             } else {
                 appendChild(parent->left, newNode);
             }
-
         }
 
     };
+
+    void printChildren(Node<T> *parent, string space){
+
+        //├── └── │
+
+        if (parent != nullptr) {
+
+            cout << parent->data;
+            cout << endl;
+
+            string pointer = "└──";
+
+
+            if (parent->right != nullptr) {
+                if (parent->left != nullptr) {
+                    pointer = "├──";
+                }
+
+                cout << space + pointer;
+                printChildren(parent->right, space + "│   ");
+
+            }
+
+            if (parent->left != nullptr) {
+                cout << space + "└──";;
+                printChildren(parent->left, space + "│   ");
+            }
+
+        }
+
+    }
 
 };
