@@ -21,7 +21,7 @@ public:
         this->root = nullptr;
     }
     ~BST(){
-
+        clear(root);
     };
     void add(const T &element){
 
@@ -39,23 +39,17 @@ public:
         Node<T> *parent = findParent(element, root, root);
         Node<T> *nodeToRemove;
 
-
         if (parent->left->data == element) {
             nodeToRemove = parent->left;
         } else {
             nodeToRemove = parent->right;
         }
 
-        // one or zero childern
         if (nodeToRemove->left == nullptr || nodeToRemove->right == nullptr){
 
             removeNodeWithOneChild(nodeToRemove, parent);
             delete nodeToRemove;
-
-
         }
-
-
         if (nodeToRemove->left != nullptr && nodeToRemove->right != nullptr) {
 
             Node<T> *lowestValue = findLowestValueInBranch(nodeToRemove->right);
@@ -65,7 +59,6 @@ public:
             removeNodeWithOneChild(lowestValue, lowestValueParent);
             delete lowestValue;
         }
-
     };
 
     bool contains(const T &element) {
@@ -77,8 +70,24 @@ public:
         printChildren(root, "");
 
     };
-//private:
+private:
     Node<T> *root;
+
+    void clear(Node<T> * node) {
+
+        if (node->left != nullptr) {
+            clear(node->left);
+        }
+
+        if (node->right != nullptr) {
+            clear(node->right);
+        }
+
+        cout << node->data << " deleted" << endl;
+        delete node;
+
+
+    }
 
     void removeNodeWithOneChild(Node<T> *nodeToRemove, Node<T> *parent){
         Node<T> *nodeToRemoveChild;
@@ -166,16 +175,12 @@ public:
     };
 
     void printChildren(Node<T> *parent, string space){
-
-        //├── └── │
-
         if (parent != nullptr) {
 
             cout << parent->data;
             cout << endl;
 
             string pointer = "└──";
-
 
             if (parent->right != nullptr) {
                 if (parent->left != nullptr) {
@@ -184,16 +189,14 @@ public:
 
                 cout << space + pointer;
                 printChildren(parent->right, space + "   ");
-
             }
 
             if (parent->left != nullptr) {
                 cout << space + "└──";;
                 printChildren(parent->left, space + "   ");
             }
-
         }
-
     }
+
 
 };
