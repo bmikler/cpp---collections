@@ -39,7 +39,11 @@ public:
         Node<T> *parent = findParent(element, root, root);
         Node<T> *nodeToRemove;
 
-        if (parent->left->data == element) {
+        if (parent->data == element){
+            nodeToRemove = root;
+        }
+
+        else if (parent->left->data == element) {
             nodeToRemove = parent->left;
         } else {
             nodeToRemove = parent->right;
@@ -70,11 +74,10 @@ public:
         printChildren(root, "");
 
     };
-private:
+//private:
     Node<T> *root;
 
     void clear(Node<T> * node) {
-
         if (node->left != nullptr) {
             clear(node->left);
         }
@@ -82,11 +85,7 @@ private:
         if (node->right != nullptr) {
             clear(node->right);
         }
-
-        cout << node->data << " deleted" << endl;
         delete node;
-
-
     }
 
     void removeNodeWithOneChild(Node<T> *nodeToRemove, Node<T> *parent){
@@ -110,12 +109,9 @@ private:
 
         if (node->left == nullptr){
             return node;
-        }
-
-        else  {
+        } else  {
             return findLowestValueInBranch(node->left);
         }
-
     }
 
     Node<T> *findParent(const T &element, Node<T> *node, Node<T> *parent) {
@@ -123,7 +119,6 @@ private:
         if (node == nullptr) {
             return nullptr;
         }
-
         else if (node->data == element) {
             return parent;
         }
