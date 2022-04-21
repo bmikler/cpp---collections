@@ -34,10 +34,53 @@ public:
         }
 
     };
-    void remove(const T &element);
+    void remove(const T &element){
 
-    bool search(const T &element) {
-        search(element, root);
+        Node<T> *parent = findParent(element, root, root);
+        Node<T> *nodeToRemove;
+        bool left = false;
+        bool right = false;
+
+        if (parent->left->data == element) {
+            nodeToRemove = parent->left;
+            left = true;
+        } else {
+            nodeToRemove = parent->right;
+            right = true;
+        }
+
+        // both children null
+        if (nodeToRemove->left == nullptr | nodeToRemove->right == nullptr){
+
+            Node<T> *nodeToRemoveChild;
+
+            if (nodeToRemove->left != nullptr) {
+                nodeToRemoveChild = nodeToRemove->left;
+            } else {
+                nodeToRemoveChild = nodeToRemove ->right;
+            }
+
+            if (left) {
+                parent->left = nodeToRemoveChild;
+            }
+
+            if (right) {
+                parent->right = nodeToRemoveChild;
+            }
+
+        }
+
+        //one child null one not null
+
+
+        //both children not null
+
+       delete nodeToRemove;
+
+    };
+
+    bool contains(const T &element) {
+        return search(element, root) != nullptr;
     };
 
 
@@ -45,10 +88,32 @@ public:
         printChildren(root, "");
 
     };
-private:
+//private:
     Node<T> *root;
 
+    Node<T> * findParent(const T &element, Node<T> *node, Node<T> *parent) {
+
+        if (node == nullptr) {
+            return nullptr;
+        }
+
+        else if (node->data == element) {
+            return parent;
+        }
+
+        else if (node->data < element) {
+            return findParent(element, node->right, node);
+        }
+
+        else if (node->data > element) {
+            return findParent(element, node->left, node);
+        }
+
+
+    }
+
     bool search(const T &element, Node<T> *parent){
+
         if(parent == nullptr) {
             return false;
         }
@@ -100,13 +165,13 @@ private:
                 }
 
                 cout << space + pointer;
-                printChildren(parent->right, space + "│   ");
+                printChildren(parent->right, space + "   ");
 
             }
 
             if (parent->left != nullptr) {
                 cout << space + "└──";;
-                printChildren(parent->left, space + "│   ");
+                printChildren(parent->left, space + "   ");
             }
 
         }
